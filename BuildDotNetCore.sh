@@ -23,17 +23,18 @@ BuildClr()
 
 	echo "Starting CLR build"
 
-	sudo apt-get install git
+	sudo apt-get -y install git
 	git clone -b ${Branch} https://github.com/dotnet/coreclr.git
 
 	sed -i 's/"debian.9-x64" //g' coreclr/build.sh
 
-	sudo apt-get install debootstrap
-	sudo apt-get install qemu-user-static libunwind8
+	sudo apt-get -y install libunwind8
+	sudo apt-get -y install debootstrap
+	sudo apt-get -y install qemu-user-static
 	cd coreclr
 	sudo ./cross/build-rootfs.sh x86
-	sudo apt-get install cmake
-	sudo apt-get install clang-3.8 lldb-3.8
+	sudo apt-get -y install cmake
+	sudo apt-get -y install clang-3.8 lldb-3.8
 
 	./build.sh cross x86 release skipnuget skiptests cmakeargs "-DSKIP_LLDBPLUGIN=true" clang3.8
 
@@ -54,7 +55,7 @@ BuildCoreFx()
 	
 	echo "Starting CorFX build"
 
-	sudo apt-get install git clang-3.9 cmake make libc6-dev libssl-dev libkrb5-dev libcurl4-openssl-dev zlib1g-dev
+	sudo apt-get -y install git clang-3.9 cmake make libc6-dev libssl-dev libkrb5-dev libcurl4-openssl-dev zlib1g-dev
 	git clone -b ${Branch} https://github.com/dotnet/corefx.git
 	cd corefx
 	sudo ./cross/build-rootfs.sh x86
@@ -109,9 +110,9 @@ Install ()
 
 	#Install .net core dependancies
 	#Required by dotnet-host
-	sudo apt-get install libc6 libgcc1 libstdc++6
+	sudo apt-get -y install libc6 libgcc1 libstdc++6
 	#Required by dotnet-runtime
-	sudo apt-get install libcurl3 libgssapi-krb5-2 liblttng-ust0 libunwind8 libuuid1 zlib1g libssl1.0.2 libicu57
+	sudo apt-get -y install libcurl3 libgssapi-krb5-2 liblttng-ust0 libunwind8 libuuid1 zlib1g libssl1.0.2 libicu57
 
 	sudo cp -r dotnetcore/usr/. /usr
 	sudo ln -sr /usr/share/dotnet/shared/Microsoft.NETCore.App/${Version}/corerun /usr/share/dotnet/dotnet
