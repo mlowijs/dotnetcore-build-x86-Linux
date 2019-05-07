@@ -26,10 +26,7 @@ BuildClr()
 	sudo apt-get install git
 	git clone -b ${Branch} https://github.com/dotnet/coreclr.git
 
-	#Open build.sh and remove debian.9-x64 from isMSBuildOnNETCoreSupported()
-	echo "Open build.sh and remove debian.9-x64 from UNSUPPORTED_RIDS in isMSBuildOnNETCoreSupported()"
-	echo "Press enter when done"
-	read Uninstalled
+	sed -i 's/"debian.9-x64" //g' coreclr/build.sh
 
 	sudo apt-get install debootstrap
 	sudo apt-get install qemu-user-static libunwind8
