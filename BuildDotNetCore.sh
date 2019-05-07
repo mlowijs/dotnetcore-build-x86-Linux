@@ -4,8 +4,8 @@
 #Build on x86 Linux is not supported
 
 OutputDir="dotnetcore"
-Branch="v2.1-preview1" #master #v2.0.6 #v2.0.5
-Version="2.1.0"
+Branch="v2.2.4" #master #v2.0.6 #v2.0.5
+Version="2.2.4"
 
 BuildAll()
 {
@@ -32,7 +32,7 @@ BuildClr()
 	read Uninstalled
 
 	sudo apt-get install debootstrap
-	sudo apt-get install qemu-user-static
+	sudo apt-get install qemu-user-static libunwind8
 	cd coreclr
 	sudo ./cross/build-rootfs.sh x86
 	sudo apt-get install cmake
@@ -87,7 +87,7 @@ BuildOutput()
 	#cp corefx/bin/Unix.AnyCPU.Debug/runtime/netcoreapp/libhostfxr.so dotnetcore/usr/share/dotnet/host/fxr/2.0.5/libhostfxr.so
 
 	#dotnet-runtime-2.0.5
-	cp corefx/Tools/dotnetcli/shared/Microsoft.NETCore.App/2.0.3/Microsoft.NETCore.App.deps.json ${OutputDir}
+	cp corefx/Tools/dotnetcli/shared/Microsoft.NETCore.App/2.1.0-rc1/Microsoft.NETCore.App.deps.json ${OutputDir}
 	
 	find corefx/bin/runtime/netcoreapp-Linux-Release-x64 -iname \*.dll -exec cp {} ${OutputDir} \;
 	find corefx/bin/runtime/netcoreapp-Linux-Release-x64 -iname \*.pdb -exec cp {} ${OutputDir} \;
